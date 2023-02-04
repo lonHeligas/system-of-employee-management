@@ -1,15 +1,15 @@
 const express = require('express');
 // Import and require mysql2
 const mysql = require('mysql2');
-// const inquirer = require('inquirer');
+const inquirer = require('inquirer');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-// Express middleware
+// ^ Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// connects to database
+// ^ connects to database
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -20,19 +20,87 @@ const db = mysql.createConnection(
     database: 'employees_db'
   },
   console.log(`Connected to the employees_db database.`)
-);
-  
-// Query database
-db.query('SELECT * FROM employee', function (err, results) {
-  console.log(results);
+);  
+
+// read all departments
+app.get('/api/department', (req, res) => {
+  const sql = `SELECT id, name FROM department`;
+    db.query(sql, (err, rows) => {
+      if (err){
+        res.status(500).json({ error: err.message});
+        return;
+      }
+      res.json({
+        // * message: 'success',
+        data: rows
+      });
+      
+    })
+})
+
+app.get('/api/role', (req, res) => {
+  const sql = `SELECT id, title, salary, department_id FROM role`;
+    db.query(sql, (err, rows) => {
+      if (err){
+        res.status(500).json({ error: err.message});
+        return;
+      }
+      res.json({
+        // * message: 'success',
+        data: rows
+      });
+      
+    })
+})
+
+app.get('/api/employee', (req, res) => {
+  const sql = `SELECT id, first_name, last_name, role_id, manager_id FROM employee`;
+    db.query(sql, (err, rows) => {
+      if (err){
+        res.status(500).json({ error: err.message});
+        return;
+      }
+      res.json({
+        // * message: 'success',
+        data: rows
+      });
+    })
+})
+
+
+
+
+
+// ^ Query database
+db.query('SELECT * FROM role', function (err, results) {
+  // * console.log(results);
 });
   
-// Default response for any other request (not found)
+// ^ Default response for any other request (not found)
 app.use((req, res) => {
   res.status(404).end();
 });
-  
+
+
+// ^ add a department
+app.post('/api/new-department', (req, res) => {
+  const sql = `INSERT INTO department (name)
+       VALUES (?)`;
+       const params = [body.name];
+      db.query(sql, params, (err, result) => {
+        if (err){
+          req.status(400).json({ error: err.message });
+        }
+        res.json({
+          message: 'success',
+          data: body
+        });
+      })
+})
+
+
+
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} 🚀`);
+  console.log(`Server running on port http://localhost:${PORT} 🚀`);
 });
 
