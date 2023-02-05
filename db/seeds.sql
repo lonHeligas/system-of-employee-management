@@ -23,7 +23,7 @@ VALUES (1, "Field Officer", "1000000", 1),
        (15, "Infrastructure Ops", "60000", 5);
 
 INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (1, "Nicholas", "Fury", 1, 1),
+VALUES (1, "Nicholas", "Fury", 1, null),
        (2, "Phil", "Coulson", 1, 1),
        (3, "Jemma", "Simmons", 3, 2),
        (4, "Leopold", "Fitzgerald", 4, 2),
