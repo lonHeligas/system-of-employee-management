@@ -1,3 +1,4 @@
+const { response } = require('express');
 const inquirer = require('inquirer');
 const Mainmenu = require('./lib/Mainmenu');
 
@@ -9,19 +10,52 @@ function showMainMenu (){
   inquirer
   .prompt(Mainmenu).then(selection => {
     console.log(selection);
-    if (selection.choice == "viewdept") {
-      viewDepartments();
+    switch (selection.choice){
+      case 'viewdept': 
+        viewDepartments();
+        break;
+      case 'viewroles':
+        viewRoles();
+        break;
+      case 'viewemps':
+        viewEmployees();
+        break;
+      case 'adddept':
+        addDept();
+        break;
+      case 'addrole':
+        addRole();
+        break;
+      case 'addemp':
+        addEmployee();
+        break;
+      case 'updateemp':
+        updateEmployee();
+        break;
+      case 'quit':
+        quitProgram();
+        break;  
     }
   })
 }
 
 
-function viewDepartments(){
+function viewDepartments(selection){  
   fetch(`${localHost}/api/department`, {
     method: 'GET',
     
   }).then((response) => {
    response.json().then(data => console.log(data))
+  })
+}
+
+
+function viewEmployees(){
+  fetch(`${localHost}/api/employee`, {
+    method: 'GET',
+
+  }).then((response) => {
+    response.json().then(data => console.log(data))
   })
 }
 
