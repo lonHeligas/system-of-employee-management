@@ -56,7 +56,11 @@ app.get('/api/role', (req, res) => {
 
 // read all employees
 app.get('/api/employee', (req, res) => {
-  const sql = `SELECT id, first_name, last_name, role_id, manager_id FROM employee`;
+  const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, manager.first_name AS manager_fname, manager.last_name AS manager_lname FROM employee
+  LEFT JOIN role ON employee.role_id = role.id
+  LEFT JOIN department ON role.department_id = department.id
+  LEFT JOIN employee AS manager ON employee.manager_id = manager.id`;
+  
     db.query(sql, (err, rows) => {
       if (err){
         res.status(500).json({ error: err.message});
