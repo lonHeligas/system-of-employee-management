@@ -106,10 +106,10 @@ app.post('/api/department', (req, res) => {
 
 // ^ add a role
 app.post('/api/role', (req, res) => {
-  // console.log (req.body);
-  const sql = `INSERT INTO role (title, salary, department_id)
+  console.log (req.body);
+  const sql = `INSERT INTO role (department_id, title, salary)
   VALUES (?)`;
-  const params = [req.body.name];
+  const params = [req.body];
   // console.log(`req.body = ${JSON.stringify(req, null, 2)}`);
   
   // console.log(sql);

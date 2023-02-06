@@ -57,6 +57,7 @@ function viewRoles(){
     formatTableData(data, colTitle);
    })
   })
+  showMainMenu()
 }
 
 function viewDepartments(){  
@@ -68,6 +69,7 @@ response.json().then( ({ data }) => {
   formatTableData(data, colTitle);
   })
 })
+showMainMenu()
 }
 
 
@@ -93,6 +95,7 @@ function viewEmployees(){
       formatTableData(data, colTitle);
     })
   })
+  showMainMenu()
 }
 
 // adds a department to the database
@@ -161,12 +164,12 @@ function addRole(){
               name: 'addRoleSalary',
             }
           ]).then(answerObj =>{
-              console.log(answerObj)
+              console.log(answerObj.addRoleName)
               fetch(`${localHost}/api/role`, {
                 method: 'POST',
                 headers: {'Content-type':'application/json'},
                 body: JSON.stringify({name:answerObj}),
-              }).then((answerObj) => {
+              }).then((answerObj2) => {
                 console.log(`${answerObj.addRoleName} has been added to the S.H.I.E.L.D. database.`);
                 showMainMenu();
               })
