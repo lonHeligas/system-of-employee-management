@@ -87,10 +87,9 @@ app.post('/api/department', (req, res) => {
   const sql = `INSERT INTO department (name) 
   VALUES (?)`;
   const params = [req.body.name];
-  // console.log(`req.body = ${JSON.stringify(req, null, 2)}`);
-  
-  // console.log(sql);
-  // console.log(params);  
+  // || console.log(`req.body = ${JSON.stringify(req, null, 2)}`);  
+  // || console.log(sql);
+  // || console.log(params);  
   db.query(sql, params, (err, result) => {
     if (err){
       res.status(400).json({ error: err.message });
@@ -108,14 +107,15 @@ app.post('/api/department', (req, res) => {
 app.post('/api/role', (req, res) => {
   console.log (req.body);
   const sql = `INSERT INTO role (department_id, title, salary)
-  VALUES (?)`;
-  const params = [req.body];
+  VALUES (?,?,?)`;
+  const params = [req.body.addRoleDept, req.body.addRoleName, req.body.addRoleSalary];
   // console.log(`req.body = ${JSON.stringify(req, null, 2)}`);
   
   // console.log(sql);
   // console.log(params);  
   db.query(sql, params, (err, result) => {
     if (err){
+      console.log(err)
       res.status(400).json({ error: err.message });
     }
     res.json({
@@ -125,6 +125,10 @@ app.post('/api/role', (req, res) => {
     });
   })
 });
+
+// todo Add an employee
+
+//todo Modify an employee's record
 
 
 // ^ Default response for any other request (not found)

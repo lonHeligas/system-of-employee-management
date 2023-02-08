@@ -3,12 +3,12 @@ const inquirer = require('inquirer');
 const Mainmenu = require('./lib/Mainmenu');
 const localHost = 'http://localhost:3001'
 const _table = require('console.table') ;
-//const Shieldlogo = require('./lib/ShieldLogo')
+const Shieldlogo = require('./lib/Shieldlogo')
 
 
 
 function splashScreen (){  
-  //console.log(Shieldlogo)
+  // console.log(Shieldlogo)
   console.log(`Welcome to the Strategic Homeland Intervention, Enforcement and Logistics Division Employee Roster and Editor.
    `)
   showMainMenu()
@@ -126,8 +126,6 @@ function addDept(){
     })
   })
 }
-    
-
 
 
 function addRole(){
@@ -168,7 +166,7 @@ function addRole(){
               fetch(`${localHost}/api/role`, {
                 method: 'POST',
                 headers: {'Content-type':'application/json'},
-                body: JSON.stringify({name:answerObj}),
+                body: JSON.stringify(answerObj),
               }).then((answerObj2) => {
                 console.log(`${answerObj.addRoleName} has been added to the S.H.I.E.L.D. database.`);
                 showMainMenu();
